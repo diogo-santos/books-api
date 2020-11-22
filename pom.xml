@@ -10,7 +10,7 @@
 		<relativePath/>
 	</parent>
 
-	<artifactId>books-search-api</artifactId>
+	<artifactId>books-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>books-api</name>
 	<description>Data services for book domain</description>
