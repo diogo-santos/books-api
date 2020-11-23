@@ -1,6 +1,7 @@
 # books-api
 Rest service for Books domain with pagination
 
+Check API documentation at https://main.dk5qkrdybgcut.amplifyapp.com/swagger-ui.html
 
 ## Getting the code on your computer
 - [ ] Java 8
@@ -17,3 +18,6 @@ Execute tests
 ```
 mvn clean package
 ```
+
+## Test the App
+Check API documentation at http://localhost:8080/swagger-ui.html
