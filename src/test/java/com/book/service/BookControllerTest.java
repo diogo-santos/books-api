@@ -90,4 +90,121 @@ public class BookControllerTest {
 				.andExpect(jsonPath("$.publishedDate", is("2018-01-01")))
 				.andExpect(jsonPath("$.image", is(emptyOrNullString())));
 	}
+
+	@Test
+	public void whenPerformDelete_ThenBookIsDeleted() throws Exception {
+		//Given a existing book
+		mockMvc.perform(get("/books/7"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.id", is(7)));
+		//When
+		mockMvc.perform(delete("/books/7")).andExpect(status().isOk());
+		//Then
+		mockMvc.perform(get("/books/7"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(""));
+	}
+
+	@Test
+	public void givenBookWhenPerformPostThenBookIsCreated() throws Exception {
+		//Given book
+		String bookJson =
+				"{" +
+				"\"title\": \"Mock title\"," +
+				"\"author\":\"Mock author\"," +
+				"\"category\": \"Mock category\", " +
+				"\"publishedDate\": \"2020-01-01\"" +
+				"}";
+		//When
+		mockMvc.perform(post("/books")
+				.contentType(APPLICATION_JSON)
+				.content(bookJson))
+				.andExpect(status().isCreated());
+		//Then
+		Iterable<Book> books = repository.findAll();
+		assertThat(books).extracting(Book::getTitle).contains("Mock title");
+		assertThat(books).extracting(Book::getAuthor).contains("Mock author");
+		assertThat(books).extracting(Book::getCategory).contains("Mock category");
+		assertThat(books).extracting(Book::getPublishedDate).contains(LocalDate.of(2020, 1, 1));
+	}
+
+	@Test
+	public void givenBookWithPublishYearOnlyWhenPerformPostThenBookIsCreated() throws Exception {
+		//Given book
+		String bookJson =
+				"{" +
+						"\"title\": \"Mock title\"," +
+						"\"author\":\"Mock author\"," +
+						"\"category\": \"Mock category\", " +
+						"\"publishedDate\": \"1999\"" +
+						"}";
+		//When
+		mockMvc.perform(post("/books")
+				.contentType(APPLICATION_JSON)
+				.content(bookJson))
+				.andExpect(status().isCreated());
+		//Then
+		Iterable<Book> books = repository.findAll();
+		assertThat(books).extracting(Book::getTitle).contains("Mock title");
+		assertThat(books).extracting(Book::getAuthor).contains("Mock author");
+		assertThat(books).extracting(Book::getCategory).contains("Mock category");
+		assertThat(books).extracting(Book::getPublishedDate).contains(LocalDate.of(1999, 1, 1));
+	}
+
+	@Test
+	public void givenBookWithoutTitleWhenPerformPostThenFieldErrorIsReturned() throws Exception {
+		//Given book without title
+		String bookJson = "{" +
+				"\"title\": \"\"," +
+				"\"author\":\"Mock author\"," +
+				"\"category\": \"Mock category\", " +
+				"\"publishedDate\": \"2020-01-01\"" +
+				"}";
+		//When
+		ResultActions postBooksResponse = mockMvc.perform(post("/books")
+				.contentType(APPLICATION_JSON)
+				.content(bookJson));
+		//Then
+		postBooksResponse
+				.andExpect(status().is4xxClientError())
+				.andExpect(jsonPath("$.title", is("must not be blank")));
+	}
+
+	@Test
+	public void givenBookWithInvalidDateFormatWhenPerformPostThenErrorIsReturned() throws Exception {
+		//Given book without title
+		String bookJson = "{" +
+				"\"title\": \"Mock title\"," +
+				"\"author\":\"Mock author\"," +
+				"\"category\": \"Mock category\", " +
+				"\"publishedDate\": \"01/01/2000\"" +
+				"}";
+		//When
+		ResultActions postBooksResponse = mockMvc.perform(post("/books")
+				.contentType(APPLICATION_JSON)
+				.content(bookJson));
+		//Then
+		postBooksResponse
+				.andExpect(status().is4xxClientError())
+				.andExpect(jsonPath("$.message", is("Invalid date 01/01/2000. It should be a year (yyyy) or date (yyyy-MM-dd) format")));
+	}
+
+	@Test
+	public void givenBookWithInvalidYearWhenPerformPostThenErrorIsReturned() throws Exception {
+		//Given book without title
+		String bookJson = "{" +
+				"\"title\": \"Mock title\"," +
+				"\"author\":\"Mock author\"," +
+				"\"category\": \"Mock category\", " +
+				"\"publishedDate\": \"12/1\"" +
+				"}";
+		//When
+		ResultActions postBooksResponse = mockMvc.perform(post("/books")
+				.contentType(APPLICATION_JSON)
+				.content(bookJson));
+		//Then
+		postBooksResponse
+				.andExpect(status().is4xxClientError())
+				.andExpect(jsonPath("$.message", is("Invalid date 12/1. It should be a year (yyyy) or date (yyyy-MM-dd) format")));
+	}
 }

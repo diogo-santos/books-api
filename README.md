@@ -1,7 +1,7 @@
 # books-api
 Rest service for Books domain with pagination
 
-Check API documentation at https://main.dk5qkrdybgcut.amplifyapp.com/swagger-ui.html
+Check AWS API documentation at http://books-api.us-east-1.elasticbeanstalk.com/swagger-ui.html
 
 ## Getting the code on your computer
 - [ ] Java 8
