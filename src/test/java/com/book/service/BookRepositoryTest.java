@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -22,7 +23,8 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@Sql(value = {"/schema.sql", "/data.sql"}, executionPhase = BEFORE_TEST_METHOD)
+@ActiveProfiles("test")
+@Sql(value = {"/schema-test.sql", "/data-test.sql"}, executionPhase = BEFORE_TEST_METHOD)
 public class BookRepositoryTest {
 	@Autowired
 	private TestEntityManager entityManager;
