@@ -62,7 +62,7 @@ public class BookServiceTest {
 		// Given
 		int pageNumber = -1;
 		int pageSize = -1;
-		String sortBy = "invalidField";
+		String sortBy = "publishedDate";
 
 		// When
 		PageBookDto page = bookService.getAllBooks(pageNumber, pageSize, sortBy);
