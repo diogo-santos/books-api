@@ -209,4 +209,14 @@ public class BookControllerTest {
 				.andExpect(status().is4xxClientError())
 				.andExpect(jsonPath("$.message", is("Invalid date 12/1. It should be a year (yyyy) or date (yyyy-MM-dd) format")));
 	}
+
+	@Test
+	public void whenPerformGetBooksWithInvalidSortField_ThenErrorIsReturned() throws Exception {
+		//When
+		ResultActions getBooksResponse = mockMvc.perform(get("/books?pageNumber=2&pageSize=4&sortBy=invalid"));
+		//Then
+		getBooksResponse
+				.andExpect(status().is4xxClientError())
+				.andExpect(jsonPath("$.message", is("No property invalid found for type Book!")));
+	}
 }
