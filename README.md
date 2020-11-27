@@ -1,8 +1,6 @@
 # books-api
 Rest service for Books domain with pagination
 
-Check AWS API documentation at http://books-api.us-east-1.elasticbeanstalk.com/swagger-ui.html
-
 ## Getting the code on your computer
 - [ ] Java 8
 - [ ] Maven 3+

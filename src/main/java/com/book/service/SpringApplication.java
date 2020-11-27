@@ -1,10 +1,9 @@
 package com.book.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -21,22 +20,22 @@ import static springfox.documentation.spi.DocumentationType.SWAGGER_2;
 @SpringBootApplication
 public class SpringApplication {
 
-	@Autowired
-	private Environment env;
-
 	public static void main(String[] args) {
 		org.springframework.boot.SpringApplication.run(SpringApplication.class, args);
 	}
 
 	@Bean
-	public WebMvcConfigurer corsConfigurer() {
+	public WebMvcConfigurer webMvcConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				String urls = env.getProperty("crossOriginUrls");
-				registry.addMapping("/books/**")
-						.allowedOrigins(urls)
+				registry.addMapping("/**")
+						.allowedOrigins("*")
 						.allowedMethods("*");
+			}
+			@Override
+			public void addViewControllers(ViewControllerRegistry registry) {
+				registry.addViewController("/").setViewName("redirect:/swagger-ui.html");
 			}
 		};
 	}

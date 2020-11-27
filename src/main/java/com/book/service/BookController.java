@@ -21,7 +21,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping
 public class BookController {
     private final Logger logger = LoggerFactory.getLogger(BookController.class);
 
