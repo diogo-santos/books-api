@@ -188,7 +188,7 @@ public class BookControllerTest {
 		//Then
 		postBooksResponse
 				.andExpect(status().is4xxClientError())
-				.andExpect(jsonPath("$.message", is("Invalid date 01/01/2000. It should be a year (yyyy) or date (yyyy-MM-dd) format")));
+				.andExpect(jsonPath("$.message", is("Invalid date: 01/01/2000. It should be a year (yyyy) or date (yyyy-MM-dd) format")));
 	}
 
 	@Test
@@ -207,7 +207,7 @@ public class BookControllerTest {
 		//Then
 		postBooksResponse
 				.andExpect(status().is4xxClientError())
-				.andExpect(jsonPath("$.message", is("Invalid date 12/1. It should be a year (yyyy) or date (yyyy-MM-dd) format")));
+				.andExpect(jsonPath("$.message", is("Invalid date: 12/1. It should be a year (yyyy) or date (yyyy-MM-dd) format")));
 	}
 
 	@Test
@@ -218,5 +218,25 @@ public class BookControllerTest {
 		getBooksResponse
 				.andExpect(status().is4xxClientError())
 				.andExpect(jsonPath("$.message", is("No property invalid found for type Book!")));
+	}
+
+	@Test
+	public void whenPerformSaveBoosWithExistentTitle_ThenErrorIsReturned() throws Exception {
+		//Given
+		String bookJson =
+				"{" +
+				"\"title\": \"ReactJS Blueprints\"," +
+				"\"author\":\"Mock author\"," +
+				"\"category\": \"Mock category\", " +
+				"\"publishedDate\": \"2000\"" +
+				"}";
+		//When
+		ResultActions postBooksResponse = mockMvc.perform(post("/books")
+				.contentType(APPLICATION_JSON)
+				.content(bookJson));
+		//Then
+		postBooksResponse
+				.andExpect(status().is4xxClientError())
+				.andExpect(jsonPath("$.message", is("Title already exists: ReactJS Blueprints")));
 	}
 }

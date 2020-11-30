@@ -10,9 +10,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import static org.springframework.util.StringUtils.hasText;
 
@@ -42,6 +44,11 @@ public class BookService {
     }
 
     public Long create(CreateBookDto createBookDto) {
+        List<BookView> books = repo.findBookByTitle(createBookDto.getTitle());
+        if (!CollectionUtils.isEmpty(books)) {
+            throw new IllegalArgumentException("Title already exists: " + createBookDto.getTitle());
+        }
+
         Book bookToSave = new Book();
         bookToSave.setTitle(createBookDto.getTitle());
         bookToSave.setAuthor(createBookDto.getAuthor());
@@ -63,7 +70,8 @@ public class BookService {
                     publishedDate = LocalDate.parse(dateOrYearStr, DateTimeFormatter.ofPattern(DATE_FORMAT));
                 }
             } catch (Exception e) {
-              throw new IllegalArgumentException(String.format("Invalid date %s. It should be a year (yyyy) or date (%s) format", dateOrYearStr, DATE_FORMAT), e);
+              throw new IllegalArgumentException(String.format("Invalid date: %s. It should be a year (yyyy) or date (%s) format",
+                      dateOrYearStr, DATE_FORMAT), e);
             }
         }
         return publishedDate;
