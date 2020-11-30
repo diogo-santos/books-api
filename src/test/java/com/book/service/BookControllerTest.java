@@ -219,4 +219,24 @@ public class BookControllerTest {
 				.andExpect(status().is4xxClientError())
 				.andExpect(jsonPath("$.message", is("No property invalid found for type Book!")));
 	}
+
+	@Test
+	public void whenPerformSaveBoosWithExistentTitle_ThenErrorIsReturned() throws Exception {
+		//Given
+		String bookJson =
+				"{" +
+				"\"title\": \"ReactJS Blueprints\"," +
+				"\"author\":\"Mock author\"," +
+				"\"category\": \"Mock category\", " +
+				"\"publishedDate\": \"2000\"" +
+				"}";
+		//When
+		ResultActions postBooksResponse = mockMvc.perform(post("/books")
+				.contentType(APPLICATION_JSON)
+				.content(bookJson));
+		//Then
+		postBooksResponse
+				.andExpect(status().is4xxClientError())
+				.andExpect(jsonPath("$.message", is("Title already exists: ReactJS Blueprints")));
+	}
 }
