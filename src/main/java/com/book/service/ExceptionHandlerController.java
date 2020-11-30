@@ -2,7 +2,6 @@ package com.book.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -33,14 +32,6 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, Object>> handleIllegalArgumentException(IllegalArgumentException ex) {
-        logger.error(ex.getMessage(), ex);
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("message", ex.getMessage());
-        return new ResponseEntity<>(body, BAD_REQUEST);
-    }
-
-    @ExceptionHandler(PropertyReferenceException.class)
-    public ResponseEntity<Map<String, Object>> handlePropertyReferenceException(PropertyReferenceException ex) {
         logger.error(ex.getMessage(), ex);
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("message", ex.getMessage());
