@@ -5,6 +5,7 @@ import com.book.service.repo.BookView;
 import com.book.service.domain.CreateBookDto;
 import com.book.service.domain.PageBookDto;
 import com.book.service.repo.BookRepository;
+import com.book.utils.DateUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.springframework.util.StringUtils.hasText;
@@ -21,7 +21,6 @@ import static org.springframework.util.StringUtils.hasText;
 @Service
 public class BookService {
 
-    private static final String DATE_FORMAT = "yyyy-MM-dd";
     private final BookRepository repo;
 
     public BookService(BookRepository repo) {
@@ -54,27 +53,11 @@ public class BookService {
         bookToSave.setAuthor(createBookDto.getAuthor());
         bookToSave.setCategory(createBookDto.getCategory());
         bookToSave.setImage(createBookDto.getImage());
-        bookToSave.setPublishedDate(convertDate(createBookDto.getPublishedDate()));
+        LocalDate publishedDate = DateUtils.convertYearOrDate(createBookDto.getPublishedDate());
+        bookToSave.setPublishedDate(publishedDate);
         Book book = repo.save(bookToSave);
 
         return book.getId();
-    }
-
-    private LocalDate convertDate(String dateOrYearStr) {
-        LocalDate publishedDate = null;
-        if (hasText(dateOrYearStr)) {
-            try {
-                if (dateOrYearStr.length() == 4) {
-                    publishedDate = LocalDate.of(Integer.parseInt(dateOrYearStr), 1, 1);
-                } else if (dateOrYearStr.length() == 10) {
-                    publishedDate = LocalDate.parse(dateOrYearStr, DateTimeFormatter.ofPattern(DATE_FORMAT));
-                }
-            } catch (Exception e) {
-              throw new IllegalArgumentException(String.format("Invalid date: %s. It should be a year (yyyy) or date (%s) format",
-                      dateOrYearStr, DATE_FORMAT), e);
-            }
-        }
-        return publishedDate;
     }
 
     public void delete(final Long id) {
