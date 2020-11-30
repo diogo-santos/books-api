@@ -1,5 +1,6 @@
 package com.book.service;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -18,10 +19,10 @@ import static springfox.documentation.spi.DocumentationType.SWAGGER_2;
 
 @EnableSwagger2
 @SpringBootApplication
-public class SpringApplication {
+public class BooksSpringApplication {
 
 	public static void main(String[] args) {
-		org.springframework.boot.SpringApplication.run(SpringApplication.class, args);
+		SpringApplication.run(BooksSpringApplication.class, args);
 	}
 
 	@Bean

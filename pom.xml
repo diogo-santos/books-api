@@ -10,10 +10,10 @@
 		<relativePath/>
 	</parent>
 
-	<artifactId>books-api</artifactId>
+	<artifactId>books-write-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>books-api</name>
-	<description>Data services for book domain</description>
+	<name>books-write-api</name>
+	<description>Data services for writing book domain</description>
 
 	<properties>
 		<java.version>1.8</java.version>

@@ -1,4 +1,4 @@
-package com.book.service.repo;
+package com.book.service.domain;
 
 import java.time.LocalDate;
 
