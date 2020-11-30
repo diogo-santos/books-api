@@ -188,7 +188,7 @@ public class BookControllerTest {
 		//Then
 		postBooksResponse
 				.andExpect(status().is4xxClientError())
-				.andExpect(jsonPath("$.message", is("Invalid date 01/01/2000. It should be a year (yyyy) or date (yyyy-MM-dd) format")));
+				.andExpect(jsonPath("$.message", is("Invalid date: 01/01/2000. It should be a year (yyyy) or date (yyyy-MM-dd) format")));
 	}
 
 	@Test
@@ -207,7 +207,7 @@ public class BookControllerTest {
 		//Then
 		postBooksResponse
 				.andExpect(status().is4xxClientError())
-				.andExpect(jsonPath("$.message", is("Invalid date 12/1. It should be a year (yyyy) or date (yyyy-MM-dd) format")));
+				.andExpect(jsonPath("$.message", is("Invalid date: 12/1. It should be a year (yyyy) or date (yyyy-MM-dd) format")));
 	}
 
 	@Test
