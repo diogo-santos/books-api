@@ -1,12 +1,12 @@
-# books-api
-Rest service for Books domain with pagination from MySql
+# books-write-api
+Rest service for writing books domain with pagination from MySql
 
 ## Getting the code on your computer
 - [ ] Java 8
 - [ ] Maven 3+
 - [ ] MySql
 - [ ] Import and install common library from https://github.com/diogo-santos/books-common
-- [ ] Import the project from GitHub https://github.com/diogo-santos/books-api
+- [ ] Import the project from GitHub https://github.com/diogo-santos/books-write-api
 
 Set MySql database properties - application.properties
 ```
@@ -17,7 +17,7 @@ spring.datasource.password=mysqlpasswd
 
 Run the app
 ```
-cd books-api
+cd books-write-api
 mvn spring-boot:run
 ```
 
