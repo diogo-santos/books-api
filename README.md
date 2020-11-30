@@ -5,6 +5,7 @@ Rest service for Books domain with pagination from MySql
 - [ ] Java 8
 - [ ] Maven 3+
 - [ ] MySql
+- [ ] Import and install common library from https://github.com/diogo-santos/books-common
 - [ ] Import the project from GitHub https://github.com/diogo-santos/books-api
 
 Set MySql database properties - application.properties
@@ -22,8 +23,8 @@ mvn spring-boot:run
 
 Execute tests
 ```
-mvn clean package
+mvn clean test
 ```
 
 ## Test the App
-Check API documentation at http://localhost:5000/
+Check API documentation at http://localhost:5000

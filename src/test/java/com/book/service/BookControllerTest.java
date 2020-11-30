@@ -16,13 +16,16 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -188,7 +191,7 @@ public class BookControllerTest {
 		//Then
 		postBooksResponse
 				.andExpect(status().is4xxClientError())
-				.andExpect(jsonPath("$.message", is("Invalid date: 01/01/2000. It should be a year (yyyy) or date (yyyy-MM-dd) format")));
+				.andExpect(jsonPath("$.message", containsString("Invalid date or year: 01/01/2000")));
 	}
 
 	@Test
@@ -207,7 +210,7 @@ public class BookControllerTest {
 		//Then
 		postBooksResponse
 				.andExpect(status().is4xxClientError())
-				.andExpect(jsonPath("$.message", is("Invalid date: 12/1. It should be a year (yyyy) or date (yyyy-MM-dd) format")));
+				.andExpect(jsonPath("$.message", containsString("Invalid date or year: 12/1")));
 	}
 
 	@Test
