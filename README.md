@@ -18,7 +18,7 @@ spring.datasource.password=mysqlpasswd
 Run the app
 ```
 cd books-write-api
-mvn spring-boot:run
+mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=5001"
 ```
 
 Execute tests
