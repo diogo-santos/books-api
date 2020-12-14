@@ -59,7 +59,7 @@
 			<version>${swagger.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.book.utils</groupId>
+			<groupId>com.github.diogo-santos</groupId>
 			<artifactId>books-common</artifactId>
 			<version>0.0.1</version>
 		</dependency>
@@ -67,14 +67,8 @@
 
 	<repositories>
 		<repository>
-			<id>mvn-repo</id>
-			<url>https://raw.github.com/diogo-santos/artifacts/master</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
 		</repository>
 	</repositories>
 
