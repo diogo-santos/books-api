@@ -68,7 +68,7 @@
 	<repositories>
 		<repository>
 			<id>mvn-repo</id>
-			<url>https://raw.github.com/diogo-santos/artifacts/master</url>
+			<url>https://raw.github.com/diogo-santos/artifacts/main</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
