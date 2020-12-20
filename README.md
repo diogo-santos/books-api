@@ -5,14 +5,13 @@ Rest service for writing books domain with pagination from MySql
 - [ ] Java 8
 - [ ] Maven 3+
 - [ ] MySql
-- [ ] Import and install common library from https://github.com/diogo-santos/books-common
 - [ ] Import the project from GitHub https://github.com/diogo-santos/books-write-api
 
-Set MySql database properties - application.properties
+Set your MySql database properties - application.properties
 ```
 spring.datasource.url=jdbc:mysql://localhost:3306/books
-spring.datasource.username=root
-spring.datasource.password=mysqlpasswd
+spring.datasource.username=mysql username
+spring.datasource.password=mysql password
 ```
 
 Run the app
